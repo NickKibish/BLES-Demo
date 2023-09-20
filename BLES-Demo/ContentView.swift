@@ -16,7 +16,9 @@ struct ContentView: View {
             ScannerView(
                 state: viewModel.state,
                 scanResults: viewModel.scanResults,
-                isScanning: $viewModel.isScanning
+                isScanning: $viewModel.isScanning,
+                startScan: viewModel.startScan,
+                stopScan: viewModel.stopScan
             )
         } else {
             notStartedView()

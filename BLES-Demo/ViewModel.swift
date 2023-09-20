@@ -22,4 +22,8 @@ extension ContentView.ViewModel {
         showContent = true
         isScanning = true
     }
+    
+    func stopScan() {
+        
+    }
 }

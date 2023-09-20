@@ -11,13 +11,20 @@ struct ScanControl: View {
     @Binding var isScanning: Bool
     let state: BluetoothState
     
+    let startScan: () -> ()
+    let stopScan: () -> ()
+    
     var body: some View {
         HStack {
             BluetoothStateBadge(state: state)
             Spacer()
             Button(
                 action: {
-                    isScanning.toggle()
+                    if isScanning {
+                        startScan()
+                    } else {
+                        stopScan()
+                    }
                 }, label: {
                     Image(systemName: isScanning ? "stop" : "play")
                         .symbolVariant(.fill)
@@ -30,8 +37,8 @@ struct ScanControl: View {
 
 #Preview {
     List {
-        ScanControl(isScanning: .constant(true), state: .poweredOn)
-        ScanControl(isScanning: .constant(false), state: .poweredOff)
-        ScanControl(isScanning: .constant(false), state: .unknown)
+        ScanControl(isScanning: .constant(true), state: .poweredOn, startScan: {}, stopScan: {})
+        ScanControl(isScanning: .constant(false), state: .poweredOff, startScan: {}, stopScan: {})
+        ScanControl(isScanning: .constant(false), state: .unknown, startScan: {}, stopScan: {})
     }
 }
