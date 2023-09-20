@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0108FF152ABAFA6100308340 /* NoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108FF142ABAFA6100308340 /* NoContentView.swift */; };
+		0108FF182ABB20FB00308340 /* ScanResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108FF172ABB20FB00308340 /* ScanResult.swift */; };
+		0108FF1B2ABB25A200308340 /* ScanResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108FF1A2ABB25A200308340 /* ScanResultView.swift */; };
+		0108FF1F2ABB263700308340 /* SignalLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108FF1E2ABB263700308340 /* SignalLevelView.swift */; };
+		0108FF212ABB2C6900308340 /* ScanResultList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108FF202ABB2C6900308340 /* ScanResultList.swift */; };
+		0108FF232ABB4E7D00308340 /* ScanControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108FF222ABB4E7D00308340 /* ScanControl.swift */; };
+		0108FF252ABB4F0B00308340 /* BluetoothState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108FF242ABB4F0B00308340 /* BluetoothState.swift */; };
+		0108FF272ABB4F9600308340 /* BluetoothStateBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108FF262ABB4F9600308340 /* BluetoothStateBadge.swift */; };
+		0108FF2A2ABB562600308340 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0108FF292ABB562600308340 /* ScannerView.swift */; };
 		017D93D42ABAF3560062287E /* BLES_DemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017D93D32ABAF3560062287E /* BLES_DemoApp.swift */; };
 		017D93D62ABAF3560062287E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017D93D52ABAF3560062287E /* ContentView.swift */; };
 		017D93D82ABAF3560062287E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 017D93D72ABAF3560062287E /* Assets.xcassets */; };
@@ -35,6 +44,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0108FF142ABAFA6100308340 /* NoContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoContentView.swift; sourceTree = "<group>"; };
+		0108FF172ABB20FB00308340 /* ScanResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanResult.swift; sourceTree = "<group>"; };
+		0108FF1A2ABB25A200308340 /* ScanResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanResultView.swift; sourceTree = "<group>"; };
+		0108FF1E2ABB263700308340 /* SignalLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalLevelView.swift; sourceTree = "<group>"; };
+		0108FF202ABB2C6900308340 /* ScanResultList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanResultList.swift; sourceTree = "<group>"; };
+		0108FF222ABB4E7D00308340 /* ScanControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanControl.swift; sourceTree = "<group>"; };
+		0108FF242ABB4F0B00308340 /* BluetoothState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothState.swift; sourceTree = "<group>"; };
+		0108FF262ABB4F9600308340 /* BluetoothStateBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothStateBadge.swift; sourceTree = "<group>"; };
+		0108FF292ABB562600308340 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		017D93D02ABAF3560062287E /* BLES-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BLES-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		017D93D32ABAF3560062287E /* BLES_DemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLES_DemoApp.swift; sourceTree = "<group>"; };
 		017D93D52ABAF3560062287E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -73,6 +91,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0108FF132ABAFA4D00308340 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0108FF192ABB259500308340 /* ScanResults */,
+				0108FF142ABAFA6100308340 /* NoContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0108FF162ABB20F400308340 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0108FF172ABB20FB00308340 /* ScanResult.swift */,
+				0108FF242ABB4F0B00308340 /* BluetoothState.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0108FF192ABB259500308340 /* ScanResults */ = {
+			isa = PBXGroup;
+			children = (
+				0108FF282ABB4FAB00308340 /* Controls */,
+				0108FF1A2ABB25A200308340 /* ScanResultView.swift */,
+				0108FF1E2ABB263700308340 /* SignalLevelView.swift */,
+				0108FF202ABB2C6900308340 /* ScanResultList.swift */,
+				0108FF292ABB562600308340 /* ScannerView.swift */,
+			);
+			path = ScanResults;
+			sourceTree = "<group>";
+		};
+		0108FF282ABB4FAB00308340 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				0108FF222ABB4E7D00308340 /* ScanControl.swift */,
+				0108FF262ABB4F9600308340 /* BluetoothStateBadge.swift */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
 		017D93C72ABAF3560062287E = {
 			isa = PBXGroup;
 			children = (
@@ -96,9 +153,11 @@
 		017D93D22ABAF3560062287E /* BLES-Demo */ = {
 			isa = PBXGroup;
 			children = (
+				0108FF162ABB20F400308340 /* Model */,
 				017D93D32ABAF3560062287E /* BLES_DemoApp.swift */,
 				017D93D52ABAF3560062287E /* ContentView.swift */,
 				01A6829E2ABAF6140092EBB9 /* ViewModel.swift */,
+				0108FF132ABAFA4D00308340 /* Views */,
 				017D93D72ABAF3560062287E /* Assets.xcassets */,
 				017D93D92ABAF3560062287E /* Preview Content */,
 			);
@@ -260,9 +319,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0108FF272ABB4F9600308340 /* BluetoothStateBadge.swift in Sources */,
+				0108FF252ABB4F0B00308340 /* BluetoothState.swift in Sources */,
+				0108FF182ABB20FB00308340 /* ScanResult.swift in Sources */,
 				017D93D62ABAF3560062287E /* ContentView.swift in Sources */,
+				0108FF152ABAFA6100308340 /* NoContentView.swift in Sources */,
 				01A6829F2ABAF6140092EBB9 /* ViewModel.swift in Sources */,
+				0108FF232ABB4E7D00308340 /* ScanControl.swift in Sources */,
+				0108FF1B2ABB25A200308340 /* ScanResultView.swift in Sources */,
+				0108FF1F2ABB263700308340 /* SignalLevelView.swift in Sources */,
+				0108FF2A2ABB562600308340 /* ScannerView.swift in Sources */,
 				017D93D42ABAF3560062287E /* BLES_DemoApp.swift in Sources */,
+				0108FF212ABB2C6900308340 /* ScanResultList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

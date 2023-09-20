@@ -9,19 +9,32 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject var viewModel = ViewModel()
+    @StateObject var viewModel = ContentView.ViewModel()
     
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint) 
-            Text("Hello, world!")
+        if viewModel.showContent {
+            ScannerView(
+                state: viewModel.state,
+                scanResults: viewModel.scanResults,
+                isScanning: $viewModel.isScanning
+            )
+        } else {
+            notStartedView()
         }
-        .padding()
+    }
+    
+    @ViewBuilder func notStartedView() -> some View {
+        NoContentView(
+            systemName: "scanner",
+            title: "Start Scan",
+            message: "Scanning is not started yet") {
+                Text("Start Scan")
+            } action: {
+                viewModel.startScan()
+            }
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(viewModel: ContentView.ViewModel())
 }
