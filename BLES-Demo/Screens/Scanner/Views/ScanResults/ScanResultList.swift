@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct ScanResultList: View {
+struct ScanResultList<Destination: View>: View {
     let scanResults: [ScanResult]
     let isScanning: Bool
+    let navigation: (UUID) -> Destination
     
     var body: some View {
         if scanResults.isEmpty {
@@ -21,8 +22,13 @@ struct ScanResultList: View {
     
     @ViewBuilder
     private var scanResultsList: some View {
-        List(scanResults) {
-            ScanResultView(name: $0.name, signalLevel: $0.signal)
+        List(scanResults) { scanResult in
+            NavigationLink {
+                navigation(scanResult.id)
+            } label: {
+                ScanResultView(name: scanResult.name, signalLevel: scanResult.signal)
+            }
+
         }
     }
     
@@ -52,19 +58,31 @@ struct ScanResultList: View {
 }
 
 #Preview {
-    ScanResultList(scanResults: [
-        
-    ], isScanning: true)
+    NavigationStack {
+        ScanResultList(scanResults: [
+            
+        ], isScanning: true) { _ in
+            EmptyView()
+        }
+    }
 }
 
 #Preview {
-    ScanResultList(scanResults: [
-        
-    ], isScanning: false)
+    NavigationStack {
+        ScanResultList(scanResults: [
+            
+        ], isScanning: false) { _ in
+            EmptyView()
+        }
+    }
 }
 
 #Preview {
-    ScanResultList(scanResults: [
-        ScanResult(name: "Scan Result", signal: .excellent, id: UUID())
-    ], isScanning: true)
+    NavigationStack {
+        ScanResultList(scanResults: [
+            ScanResult(name: "Scan Result", signal: .excellent, id: UUID(), advertisementData: [:])
+        ], isScanning: true) { _ in
+            EmptyView()
+        }
+    }
 }

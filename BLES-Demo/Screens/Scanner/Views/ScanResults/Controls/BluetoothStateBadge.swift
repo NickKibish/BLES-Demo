@@ -15,7 +15,7 @@ struct BluetoothStateBadge: View {
             .font(.caption2)
             .foregroundStyle(.background)
             .padding(5)
-            .frame(width: 100)
+            .frame(width: 120)
             .bluetoothState(state)
             .clipShape(Capsule())
     }

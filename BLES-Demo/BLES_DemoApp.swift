@@ -11,7 +11,7 @@ import SwiftUI
 struct BLES_DemoApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ScannerScreen()
         }
     }
 }

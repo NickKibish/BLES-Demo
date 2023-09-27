@@ -32,3 +32,24 @@ enum BluetoothState {
         }
     }
 }
+
+import iOS_BLE_Library_Mock
+
+extension BluetoothState {
+    init(cbState: CBManagerState) {
+        switch cbState {
+        case .unknown:
+            self = .unknown
+        case .resetting:
+            self = .resetting
+        case .unsupported:
+            self = .unsupported
+        case .unauthorized:
+            self = .unauthorized
+        case .poweredOff:
+            self = .poweredOff
+        case .poweredOn:
+            self = .poweredOn
+        }
+    }
+}

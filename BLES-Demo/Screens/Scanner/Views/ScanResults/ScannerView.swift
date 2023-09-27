@@ -7,11 +7,13 @@
 
 import SwiftUI
 
-struct ScannerView: View {
+struct ScannerView<Destination: View>: View {
     let state: BluetoothState
     let scanResults: [ScanResult]
     
     @Binding var isScanning: Bool
+    
+    let navigation: (UUID) -> Destination
     
     let startScan: () -> ()
     let stopScan: () -> ()
@@ -19,7 +21,7 @@ struct ScannerView: View {
     var body: some View {
         VStack {
             Spacer()
-            ScanResultList(scanResults: scanResults, isScanning: isScanning)
+            ScanResultList(scanResults: scanResults, isScanning: isScanning, navigation: navigation)
             Spacer()
             ScanControl(
                 isScanning: $isScanning,
@@ -38,6 +40,7 @@ struct ScannerView: View {
         state: .unknown,
         scanResults: [],
         isScanning: .constant(false),
+        navigation: { _ in EmptyView() },
         startScan: {},
         stopScan: {}
     )
@@ -48,6 +51,7 @@ struct ScannerView: View {
         state: .poweredOn,
         scanResults: [],
         isScanning: .constant(true),
+        navigation: { _ in EmptyView() },
         startScan: {},
         stopScan: {}
     )
@@ -57,12 +61,13 @@ struct ScannerView: View {
     ScannerView(
         state: .poweredOn,
         scanResults: [
-            ScanResult(name: "Blinki", signal: .good, id: UUID()),
-            ScanResult(name: "nRF-DK", signal: .bad, id: UUID()),
-            ScanResult(name: "Keyboard", signal: .excellent, id: UUID()),
-            ScanResult(name: nil, signal: .ok, id: UUID()),
+            ScanResult(name: "Blinki", signal: .good, id: UUID(), advertisementData: [:]),
+            ScanResult(name: "nRF-DK", signal: .bad, id: UUID(), advertisementData: [:]),
+            ScanResult(name: "Keyboard", signal: .excellent, id: UUID(), advertisementData: [:]),
+            ScanResult(name: nil, signal: .ok, id: UUID(), advertisementData: [:]),
         ],
         isScanning: .constant(true),
+        navigation: { _ in EmptyView() },
         startScan: {},
         stopScan: {}
     )
