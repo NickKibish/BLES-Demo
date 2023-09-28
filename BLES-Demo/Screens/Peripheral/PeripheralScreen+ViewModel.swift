@@ -21,6 +21,7 @@ extension PeripheralScreen {
         let centralManager: CentralManager
         
         private var liveUpdateCancelable = Set<AnyCancellable>()
+        private var connectionCancelable = Set<AnyCancellable>()
         
         init(id: UUID, name: String, advertisementData: [String:Any], centralManager: CentralManager) {
             self.uuid = id
@@ -37,7 +38,6 @@ extension PeripheralScreen {
 extension PeripheralScreen.ViewModel {
     func turnOnLiveUpdate() {
         centralManager.scanResultsChannel
-            .print()
             .filter { $0.peripheral.identifier == self.uuid }
             .sink { scanResult in
                 self.name = scanResult.name ?? "n/a"
@@ -53,11 +53,48 @@ extension PeripheralScreen.ViewModel {
         liveUpdateCancelable.removeAll()
     }
     
-    func connect() {
+    func connect()  {
         connectionState = .connecting
+        
+        guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [uuid]).first else {
+            fatalError()
+        }
+        
+        centralManager.connect(peripheral)
+            .autoconnect()
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    self.connectionState = .disconnected
+                case .failure(let e):
+                    self.connectionState = .error(e)
+                }
+            } receiveValue: { _ in
+                self.connectionState = .connected
+            }
+            .store(in: &connectionCancelable)
     }
     
     func disconnect() {
         connectionState = .disconnecting
+        
+        guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [uuid]).first else {
+            fatalError()
+        }
+        
+        centralManager.cancelPeripheralConnection(peripheral)
+            .autoconnect()
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    self.connectionState = .disconnected
+                case .failure(let e):
+                    self.connectionState = .error(e)
+                }
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &connectionCancelable)
+
     }
 }

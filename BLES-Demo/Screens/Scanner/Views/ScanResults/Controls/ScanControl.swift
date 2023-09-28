@@ -18,12 +18,18 @@ struct ScanControl: View {
         HStack {
             BluetoothStateBadge(state: state)
             Spacer()
+            if isScanning {
+                Text("Scanning . . .")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer()
             Button(
                 action: {
                     if isScanning {
-                        startScan()
-                    } else {
                         stopScan()
+                    } else {
+                        startScan()
                     }
                 }, label: {
                     Image(systemName: isScanning ? "stop" : "play")

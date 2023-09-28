@@ -60,12 +60,13 @@ extension ScannerScreen.ViewModel {
                     advertisementData: sr.advertisementData.rawData
                 )
             }
-            .filter {
-//                ($0.signal.rawValue < 2) && $0.name != nil 
-                $0.name != nil 
+            .filter { sr in
+                sr.name != nil
+//                sr.name != nil && !self.scanResults.contains(where: { $0.id == sr.id })
             }
+            .timeout(.seconds(5), scheduler: DispatchQueue.main)
             .sink { _ in
-                
+                self.stopScan()
             } receiveValue: { scanResult in
                 self.scanResults.replacedOrAppended(scanResult, compareBy: \.id)
             }

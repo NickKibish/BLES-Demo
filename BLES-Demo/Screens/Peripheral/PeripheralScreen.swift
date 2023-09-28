@@ -38,15 +38,16 @@ struct PeripheralView: View {
     
     var body: some View {
         VStack {
-            ContentCardGrid(data: advertisementData)
-            Divider()
+            Form {
+                ContentCardGrid(data: advertisementData)
+            }
             ConnectionButton(
                 state: connectionState,
                 connectable: connectable,
                 connect: connect,
                 disconnect: disconnect
             )
-            Spacer()
+            .padding()
         }
         .navigationTitle(name)
     }
