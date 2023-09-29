@@ -17,6 +17,7 @@ struct ScannerScreen: View {
 }
 
 struct ScannerView: View {
+    @EnvironmentObject var scannerEnv: ScannerScreenEnvironment
     
     var body: some View {
         NavigationSplitView {
@@ -25,7 +26,10 @@ struct ScannerView: View {
                 ScanControl()
                     .padding()
             }
-                .navigationTitle("Scanner")
+            .navigationTitle("Scanner")
+            .onAppear {
+                scannerEnv.startScan()
+            }
         } detail: {
             Text("Hello World!")
         }

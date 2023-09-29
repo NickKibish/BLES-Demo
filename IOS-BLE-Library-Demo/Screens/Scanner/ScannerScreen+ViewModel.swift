@@ -22,25 +22,16 @@ extension ScannerScreen {
         )
         
         init() {
-            self.environment = Environment(
-                isScanning: true,
-                bluetoothState: .poweredOn,
-                scanResults: [ScanResult(name: "Scan Result", signal: .good, id: UUID(), advertisementData: [:])],
-                startScan: { self.startScan() },
-                stopScan: { self.stopScan() },
-                peripheralViewModel: { _ in PeripheralScreen.ViewModel(scanResult: .empty) }
-            )
+            
         }
     }
 }
 
 extension ScannerScreen.ViewModel {
     func startScan() {
-        self.environment.isScanning = true
     }
     
     func stopScan() {
-        self.environment.isScanning = false
     }
 }
 
