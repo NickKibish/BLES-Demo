@@ -29,7 +29,12 @@ extension ScannerScreen {
         let centralManager = CentralManager()
         
         init() {
+            centralManager.stateChannel
+                .map { BluetoothState(managerState: $0) }
+                .assign(to: &environment.$bluetoothState)
             
+            centralManager.isScanningChannel
+                .assign(to: &environment.$isScanning)
         }
     }
 }
@@ -55,6 +60,7 @@ extension ScannerScreen.ViewModel {
     }
     
     func stopScan() {
+        centralManager.stopScan()
     }
 }
 
