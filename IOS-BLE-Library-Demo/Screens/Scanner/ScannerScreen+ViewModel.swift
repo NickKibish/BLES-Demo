@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import iOS_BLE_Library
 
 typealias ScannerScreenEnvironment = ScannerScreen.ViewModel.Environment
 
@@ -24,6 +25,8 @@ extension ScannerScreen {
         
         private var cancelable = Set<AnyCancellable>()
         
+        let centralManager = CentralManager()
+        
         init() {
             
         }
@@ -33,6 +36,14 @@ extension ScannerScreen {
 extension ScannerScreen.ViewModel {
     func startScan() {
         environment.started = true
+        
+        centralManager.scanForPeripherals(withServices: nil)
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                
+            }
+            .store(in: &cancelable)
     }
     
     func stopScan() {
