@@ -56,5 +56,15 @@ struct ScannerView: View {
 
 #Preview {
     ScannerView()
+        .environmentObject(ScannerScreenEnvironment(
+            started: true,
+            isScanning: true,
+            bluetoothState: .poweredOn,
+            scanResults: []
+        ))
+}
+
+#Preview {
+    ScannerView()
         .environmentObject(ScannerScreenEnvironment())
 }
