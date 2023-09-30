@@ -8,9 +8,10 @@
 import Foundation
 
 extension ScannerScreen.ViewModel.Environment {
-    convenience init(isScanning: Bool = false, bluetoothState: BluetoothState = .unknown, scanResults: [ScanResult] = [])  {
+    convenience init(started: Bool = false, isScanning: Bool = false, bluetoothState: BluetoothState = .unknown, scanResults: [ScanResult] = [])  {
         
         self.init(
+            started: started,
             isScanning: isScanning,
             bluetoothState: bluetoothState,
             scanResults: scanResults,

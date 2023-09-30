@@ -34,6 +34,7 @@
 		0101D6282AC77F2300BE03E2 /* ConnectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0101D6272AC77F2300BE03E2 /* ConnectionButton.swift */; };
 		0101D62A2AC780A500BE03E2 /* PeripheralEnvironment+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0101D6292AC780A500BE03E2 /* PeripheralEnvironment+Preview.swift */; };
 		0101D62C2AC7835D00BE03E2 /* ScanResult+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0101D62B2AC7835D00BE03E2 /* ScanResult+Preview.swift */; };
+		0177EAAA2AC83F3C005D1BCD /* NotStartedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0177EAA92AC83F3C005D1BCD /* NotStartedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		0101D6272AC77F2300BE03E2 /* ConnectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionButton.swift; sourceTree = "<group>"; };
 		0101D6292AC780A500BE03E2 /* PeripheralEnvironment+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PeripheralEnvironment+Preview.swift"; sourceTree = "<group>"; };
 		0101D62B2AC7835D00BE03E2 /* ScanResult+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScanResult+Preview.swift"; sourceTree = "<group>"; };
+		0177EAA92AC83F3C005D1BCD /* NotStartedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotStartedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,8 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				0101D6032AC6CC3000BE03E2 /* Extensions */,
-				0101D60F2AC7074D00BE03E2 /* Controls */,
-				0101D6002AC6C56100BE03E2 /* ScanResultList */,
+				0177EAA72AC83E80005D1BCD /* Views */,
 				0101D5F92AC5C1A200BE03E2 /* ScannerScreen.swift */,
 				0101D5FB2AC5C1B500BE03E2 /* ScannerScreen+ViewModel.swift */,
 			);
@@ -241,7 +242,7 @@
 		0101D6142AC70F3400BE03E2 /* Peripheral */ = {
 			isa = PBXGroup;
 			children = (
-				0101D61C2AC77D7100BE03E2 /* ContentCard */,
+				0177EAA82AC83E93005D1BCD /* Views */,
 				0101D6272AC77F2300BE03E2 /* ConnectionButton.swift */,
 				0101D6152AC70F4E00BE03E2 /* PeripheralScreen.swift */,
 				0101D6172AC70F9700BE03E2 /* PeripheralScreen+ViewModel.swift */,
@@ -281,6 +282,32 @@
 				0101D6252AC77EA800BE03E2 /* Array+Ext.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0177EAA62AC83E77005D1BCD /* NotStarted */ = {
+			isa = PBXGroup;
+			children = (
+				0177EAA92AC83F3C005D1BCD /* NotStartedView.swift */,
+			);
+			path = NotStarted;
+			sourceTree = "<group>";
+		};
+		0177EAA72AC83E80005D1BCD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0101D6002AC6C56100BE03E2 /* ScanResultList */,
+				0177EAA62AC83E77005D1BCD /* NotStarted */,
+				0101D60F2AC7074D00BE03E2 /* Controls */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0177EAA82AC83E93005D1BCD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0101D61C2AC77D7100BE03E2 /* ContentCard */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -430,6 +457,7 @@
 				0101D6162AC70F4E00BE03E2 /* PeripheralScreen.swift in Sources */,
 				0101D60E2AC7048300BE03E2 /* ScannerEnvironment+Preview.swift in Sources */,
 				0101D61B2AC713BB00BE03E2 /* DisplayableText.swift in Sources */,
+				0177EAAA2AC83F3C005D1BCD /* NotStartedView.swift in Sources */,
 				0101D60C2AC6E9B700BE03E2 /* SignalLevelView.swift in Sources */,
 				0101D6132AC7079900BE03E2 /* BluetoothStateBadge.swift in Sources */,
 				0101D6282AC77F2300BE03E2 /* ConnectionButton.swift in Sources */,

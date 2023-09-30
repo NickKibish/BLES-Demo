@@ -20,18 +20,22 @@ struct ScannerView: View {
     @EnvironmentObject var scannerEnv: ScannerScreenEnvironment
     
     var body: some View {
-        NavigationSplitView {
-            VStack {
-                ScanResultList()
-                ScanControl()
-                    .padding()
+        if scannerEnv.started {
+            NavigationSplitView {
+                VStack {
+                    ScanResultList()
+                    ScanControl()
+                        .padding()
+                }
+                .navigationTitle("Scanner")
+                .onAppear {
+                    scannerEnv.startScan()
+                }
+            } detail: {
+                Text("Hello World!")
             }
-            .navigationTitle("Scanner")
-            .onAppear {
-                scannerEnv.startScan()
-            }
-        } detail: {
-            Text("Hello World!")
+        } else {
+            NotStartedView()
         }
 
     }
