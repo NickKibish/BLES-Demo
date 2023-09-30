@@ -36,6 +36,7 @@
 		0101D62C2AC7835D00BE03E2 /* ScanResult+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0101D62B2AC7835D00BE03E2 /* ScanResult+Preview.swift */; };
 		0177EAAA2AC83F3C005D1BCD /* NotStartedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0177EAA92AC83F3C005D1BCD /* NotStartedView.swift */; };
 		0177EAAD2AC841B0005D1BCD /* iOS-BLE-Library in Frameworks */ = {isa = PBXBuildFile; productRef = 0177EAAC2AC841B0005D1BCD /* iOS-BLE-Library */; };
+		0177EAB02AC86EBA005D1BCD /* BluetoothState+CBManagerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0177EAAF2AC86EBA005D1BCD /* BluetoothState+CBManagerState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		0101D62B2AC7835D00BE03E2 /* ScanResult+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScanResult+Preview.swift"; sourceTree = "<group>"; };
 		0177EAA92AC83F3C005D1BCD /* NotStartedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotStartedView.swift; sourceTree = "<group>"; };
 		0177EAAE2AC84243005D1BCD /* IOS-BLE-Library */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "IOS-BLE-Library"; path = "../../../Nordic/IOS-BLE-Library"; sourceTree = "<group>"; };
+		0177EAAF2AC86EBA005D1BCD /* BluetoothState+CBManagerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BluetoothState+CBManagerState.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				0101D6252AC77EA800BE03E2 /* Array+Ext.swift */,
+				0177EAAF2AC86EBA005D1BCD /* BluetoothState+CBManagerState.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 				0101D62C2AC7835D00BE03E2 /* ScanResult+Preview.swift in Sources */,
 				0101D5FC2AC5C1B500BE03E2 /* ScannerScreen+ViewModel.swift in Sources */,
 				0101D5FA2AC5C1A200BE03E2 /* ScannerScreen.swift in Sources */,
+				0177EAB02AC86EBA005D1BCD /* BluetoothState+CBManagerState.swift in Sources */,
 				0101D6072AC6E7B900BE03E2 /* BluetoothState.swift in Sources */,
 				0101D5CE2AC59B5800BE03E2 /* IOS_BLE_Library_DemoApp.swift in Sources */,
 				0101D61E2AC77DAB00BE03E2 /* TextCard.swift in Sources */,
