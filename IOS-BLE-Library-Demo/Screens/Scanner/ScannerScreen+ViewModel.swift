@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import iOS_BLE_Library
+import CoreBluetooth
 
 typealias ScannerScreenEnvironment = ScannerScreen.ViewModel.Environment
 
@@ -38,10 +39,17 @@ extension ScannerScreen.ViewModel {
         environment.started = true
         
         centralManager.scanForPeripherals(withServices: nil)
+            .autoconnect()
+            .map {
+                ScanResult(name: $0.name, signal: ScanResult.SignalLevel(rssi: $0.rssi.value), id: $0.peripheral.identifier, advertisementData: $0.advertisementData.rawData)
+            }
+            .filter {
+                $0.name != nil
+            }
             .sink { _ in
                 
-            } receiveValue: { _ in
-                
+            } receiveValue: {
+                self.environment.scanResults.replacedOrAppended($0)
             }
             .store(in: &cancelable)
     }
