@@ -41,20 +41,10 @@ struct ScannerView: View {
     }
 }
 
-#if DEBUG
-private struct Preview {
-    static let sr = ScanResult(
-        name: "Peripheral 1",
-        signal: .good,
-        id: UUID(),
-        advertisementData: [:]
-    )
-}
-#endif
-
 #Preview {
     ScannerView()
         .environmentObject(ScannerScreenEnvironment(
+            started: true,
             isScanning: true,
             bluetoothState: .poweredOn,
             scanResults: [
@@ -62,4 +52,9 @@ private struct Preview {
                 ScanResult(name: nil, signal: .noSignal, id: UUID(), advertisementData: [:]),
             ]
         ))
+}
+
+#Preview {
+    ScannerView()
+        .environmentObject(ScannerScreenEnvironment())
 }
