@@ -21,6 +21,8 @@ extension ScannerScreen {
             peripheralViewModel: { [unowned self] sr in self.peripheralViewModel(for: sr) }
         )
         
+        private var cancelable = Set<AnyCancellable>()
+        
         init() {
             
         }
