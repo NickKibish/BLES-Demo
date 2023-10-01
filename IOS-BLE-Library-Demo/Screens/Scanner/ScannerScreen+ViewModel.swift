@@ -32,7 +32,14 @@ extension ScannerScreen {
         let centralManager = CentralManager()
         
         init() {
+            // 2.1 State changes
+            centralManager.stateChannel
+                .map { BluetoothState(managerState: $0) }
+                .assign(to: &environment.$bluetoothState)
             
+            // 2.2 Is Scanning Changes
+            centralManager.isScanningChannel
+                .assign(to: &environment.$isScanning)
         }
     }
 }
