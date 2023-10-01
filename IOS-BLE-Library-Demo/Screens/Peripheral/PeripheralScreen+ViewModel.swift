@@ -43,11 +43,45 @@ extension PeripheralScreen {
 
 extension PeripheralScreen.ViewModel {
     func connect() {
-        environment.connectionState = .connected
+        // 4.3 - Retreive peripheral
+        guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [scanResult.id]).first else {
+            return
+        }
+        
+        // 4.1 - Change state to `connecting`
+        environment.connectionState = .connecting
+        
+        // 4.4 - Connect peripheral
+        centralManager.connect(peripheral)
+            .autoconnect()
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    self.environment.connectionState = .disconnected
+                case .failure(let e):
+                    self.environment.connectionState = .error(e)
+                }
+            } receiveValue: { _ in
+                self.environment.connectionState = .connected
+            }
+            .store(in: &cancelable)
     }
     
     func disconnect() {
-        environment.connectionState = .disconnected
+        // 4.5 Retreive the peripheral
+        guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [scanResult.id]).first else {
+            return
+        }
+        
+        // 4.2 - Change state to `disconnecting`
+        environment.connectionState = .disconnecting
+        
+        // 4.6 Disconnect the peripheral
+        Task {
+            _ = try await centralManager.cancelPeripheralConnection(peripheral)
+                .autoconnect()
+                .value
+        }
     }
 }
 
