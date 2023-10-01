@@ -9,14 +9,13 @@ import Foundation
 
 extension ScannerScreen.ViewModel.Environment {
     convenience init(started: Bool = false, isScanning: Bool = false, bluetoothState: BluetoothState = .unknown, scanResults: [ScanResult] = [])  {
-        
         self.init(
             started: started,
             isScanning: isScanning,
             bluetoothState: bluetoothState,
             scanResults: scanResults,
             startScan: { }, stopScan: { },
-            peripheralViewModel: { _ in PeripheralScreen.ViewModel(scanResult: ScanResult(name: "Scan Result", signal: .good, id: UUID(), advertisementData: [:])) }
+            peripheralViewModel: { _ in fatalError() }
         )
     }
 }

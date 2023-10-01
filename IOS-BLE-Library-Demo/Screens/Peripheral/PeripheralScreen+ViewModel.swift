@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 typealias PeripheralScreenEnvironment = PeripheralScreen.ViewModel.Environment
 
@@ -21,6 +22,7 @@ extension PeripheralScreen {
         )
         
         let scanResult: ScanResult
+        private var cancelable = Set<AnyCancellable>()
         
         init(scanResult: ScanResult) {
             self.scanResult = scanResult
