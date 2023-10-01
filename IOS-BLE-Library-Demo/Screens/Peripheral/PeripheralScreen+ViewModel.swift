@@ -16,7 +16,7 @@ extension PeripheralScreen {
             name: scanResult.name,
             connectionState: .disconnected,
             displayData: mapAdvertisementData(scanResult.advertisementData),
-            rssi: DisplayableRSSI(rssi: -200),
+            rssi: DisplayableRSSI(rssi: scanResult.rssi),
             connectable: true,
             connect: { [weak self] in self?.connect() },
             disconnect: { [weak self] in self?.disconnect() }
