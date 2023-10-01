@@ -15,6 +15,8 @@ struct ContentCardView: View {
             switch v {
             case let t as DisplayableText:
                 TextCard(text: t)
+            case let s as DisplayableRSSI:
+                SignalCard(rssi: s)
             default:
                 EmptyView()
             }
@@ -42,6 +44,7 @@ private struct TR: DisplayableText {
         GridRow {
             ContentCardView(value: "Hello")
             ContentCardView(value: "Hello 2")
+            ContentCardView(value: DisplayableRSSI(rssi: -50))
         }
     }
 }

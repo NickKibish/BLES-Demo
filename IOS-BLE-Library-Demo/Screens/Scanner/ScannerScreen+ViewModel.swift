@@ -47,7 +47,7 @@ extension ScannerScreen.ViewModel {
         centralManager.scanForPeripherals(withServices: nil)
             .autoconnect()
             .map {
-                ScanResult(name: $0.name, signal: ScanResult.SignalLevel(rssi: $0.rssi.value), id: $0.peripheral.identifier, advertisementData: $0.advertisementData.rawData)
+                ScanResult(name: $0.name, rssi: $0.rssi.value, id: $0.peripheral.identifier, advertisementData: $0.advertisementData.rawData)
             }
             .filter {
                 $0.name != nil

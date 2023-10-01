@@ -36,7 +36,10 @@ struct ScanResult: Identifiable, Hashable {
     }
     
     let name: String?
-    let signal: SignalLevel
+    var signal: SignalLevel {
+        SignalLevel(rssi: rssi)
+    }
+    let rssi: Int
     let id: UUID
     let advertisementData: [String: Any]
 }
