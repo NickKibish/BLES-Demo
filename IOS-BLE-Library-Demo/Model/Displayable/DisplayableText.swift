@@ -50,7 +50,14 @@ extension Bool: DisplayableText {
     }
 }
 
-struct DisplayableTextValue: Identifiable {
+struct DisplayableRSSI: Displayable {
+    let rssi: Int
+    var signal: ScanResult.SignalLevel {
+        ScanResult.SignalLevel(rssi: rssi)
+    }
+}
+
+struct DisplayableValue: Identifiable {
     let id: String
     let description: String
     let value: Displayable

@@ -47,7 +47,7 @@ struct ScanResultList: View {
         ScanResultList()
             .environmentObject(ScannerScreenEnvironment(
                 scanResults: [
-                    ScanResult(name: "Device", signal: .excellent, id: UUID(), advertisementData: [:])
+                    ScanResult(name: "Device", rssi: 0, id: UUID(), advertisementData: [:])
                 ]
             ))
     }

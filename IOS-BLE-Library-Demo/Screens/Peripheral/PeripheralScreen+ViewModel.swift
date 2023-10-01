@@ -15,8 +15,9 @@ extension PeripheralScreen {
         lazy private (set) var environment = Environment(
             name: scanResult.name,
             connectionState: .disconnected,
-            displayData: [],
-            connectable: true, 
+            displayData: mapAdvertisementData(scanResult.advertisementData),
+            rssi: DisplayableRSSI(rssi: -200),
+            connectable: true,
             connect: { [weak self] in self?.connect() },
             disconnect: { [weak self] in self?.disconnect() }
         )
@@ -26,15 +27,6 @@ extension PeripheralScreen {
         
         init(scanResult: ScanResult) {
             self.scanResult = scanResult
-            
-            self.environment = Environment(
-                name: "My Device",
-                connectionState: .disconnected,
-                displayData: mapAdvertisementData(scanResult.advertisementData),
-                connectable: true,
-                connect: { [weak self] in self?.connect() },
-                disconnect: { [weak self] in self?.disconnect() }
-            )
         }
     }
 }
@@ -53,16 +45,18 @@ extension PeripheralScreen.ViewModel {
     class Environment: ObservableObject {
         @Published var name: String?
         @Published var connectionState: ConnectionState
-        @Published var displayData: [DisplayableTextValue]
+        @Published var displayData: [DisplayableValue]
+        @Published var rssi: DisplayableRSSI
         @Published var connectable: Bool
         
         let connect: () -> ()
         let disconnect: () -> ()
         
-        init(name: String?, connectionState: ConnectionState, displayData: [DisplayableTextValue], connectable: Bool, connect: @escaping () -> Void, disconnect: @escaping () -> Void) {
+        init(name: String?, connectionState: ConnectionState, displayData: [DisplayableValue], rssi: DisplayableRSSI, connectable: Bool, connect: @escaping () -> Void, disconnect: @escaping () -> Void) {
             self.name = name
             self.connectionState = connectionState
             self.displayData = displayData
+            self.rssi = rssi
             self.connectable = connectable
             self.connect = connect
             self.disconnect = disconnect

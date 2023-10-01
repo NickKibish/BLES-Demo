@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentCardGrid: View {
-    let data: [DisplayableTextValue]
+    let data: [DisplayableValue]
     
     var body: some View {
         Grid(alignment: .leading, horizontalSpacing: 64) {
@@ -33,11 +33,12 @@ struct ContentCardGrid: View {
 
 #Preview {
     ContentCardGrid(data: [
-        DisplayableTextValue(id: "2", description: "int number", value: 123),
-        DisplayableTextValue(id: "1", description: "text", value: "📖 Value"),
-        DisplayableTextValue(id: "3", description: "float number", value: 1.2393),
-        DisplayableTextValue(id: "4", description: "Array", value: [1,2,4]),
-        DisplayableTextValue(id: "5", description: "dictionary", value: ["1":"v"]),
-        DisplayableTextValue(id: "5", description: "data", value: Data([0x08, 0x03])),
+        DisplayableValue(id: "1", description: "text", value: "📖 Value"),
+        DisplayableValue(id: "2", description: "int number", value: 123),
+        DisplayableValue(id: "3", description: "float number", value: 1.2393),
+        DisplayableValue(id: "4", description: "Array", value: [1,2,4]),
+        DisplayableValue(id: "5", description: "dictionary", value: ["1":"v"]),
+        DisplayableValue(id: "6", description: "rssi", value: DisplayableRSSI(rssi: -70)),
+        DisplayableValue(id: "7", description: "data", value: Data([0x08, 0x03])),
     ])
 }

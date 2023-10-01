@@ -37,6 +37,7 @@
 		0177EAAA2AC83F3C005D1BCD /* NotStartedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0177EAA92AC83F3C005D1BCD /* NotStartedView.swift */; };
 		0177EAB02AC86EBA005D1BCD /* BluetoothState+CBManagerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0177EAAF2AC86EBA005D1BCD /* BluetoothState+CBManagerState.swift */; };
 		01BE5D3B2AC999DA009FAD46 /* AdvertisementData+Displayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE5D3A2AC999DA009FAD46 /* AdvertisementData+Displayable.swift */; };
+		01EFE5412AC9EF4B00A58CE4 /* SignalCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EFE5402AC9EF4B00A58CE4 /* SignalCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 		0177EAA92AC83F3C005D1BCD /* NotStartedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotStartedView.swift; sourceTree = "<group>"; };
 		0177EAAF2AC86EBA005D1BCD /* BluetoothState+CBManagerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BluetoothState+CBManagerState.swift"; sourceTree = "<group>"; };
 		01BE5D3A2AC999DA009FAD46 /* AdvertisementData+Displayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AdvertisementData+Displayable.swift"; sourceTree = "<group>"; };
+		01EFE5402AC9EF4B00A58CE4 /* SignalCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				0101D61D2AC77DAB00BE03E2 /* TextCard.swift */,
+				01EFE5402AC9EF4B00A58CE4 /* SignalCard.swift */,
 				0101D61F2AC77DF500BE03E2 /* ContentCardView.swift */,
 				0101D6212AC77E6000BE03E2 /* ContentCardGrid.swift */,
 			);
@@ -463,6 +466,7 @@
 				0101D6262AC77EA800BE03E2 /* Array+Ext.swift in Sources */,
 				0101D6162AC70F4E00BE03E2 /* PeripheralScreen.swift in Sources */,
 				0101D60E2AC7048300BE03E2 /* ScannerEnvironment+Preview.swift in Sources */,
+				01EFE5412AC9EF4B00A58CE4 /* SignalCard.swift in Sources */,
 				0101D61B2AC713BB00BE03E2 /* DisplayableText.swift in Sources */,
 				0177EAAA2AC83F3C005D1BCD /* NotStartedView.swift in Sources */,
 				0101D60C2AC6E9B700BE03E2 /* SignalLevelView.swift in Sources */,
