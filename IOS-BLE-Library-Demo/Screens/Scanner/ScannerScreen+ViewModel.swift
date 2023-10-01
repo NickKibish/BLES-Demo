@@ -67,17 +67,13 @@ extension ScannerScreen.ViewModel {
 
 extension ScannerScreen.ViewModel {
     func peripheralViewModel(for scanResult: ScanResult) -> PeripheralScreen.ViewModel {
-<<<<<<< HEAD
-        PeripheralScreen.ViewModel(scanResult: scanResult, centralManager: centralManager)
-=======
-        guard let vm = peripheralViewModels[scanResult.id] else {
-            let newViewModel = PeripheralScreen.ViewModel(scanResult: scanResult)
+       guard let vm = peripheralViewModels[scanResult.id] else {
+            let newViewModel = PeripheralScreen.ViewModel(scanResult: scanResult, centralManager: centralManager)
             peripheralViewModels[scanResult.id] = newViewModel
             return newViewModel
         }
         
         return vm 
->>>>>>> main
     }
 }
 

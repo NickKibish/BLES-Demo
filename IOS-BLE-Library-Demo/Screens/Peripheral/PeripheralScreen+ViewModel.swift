@@ -16,7 +16,7 @@ extension PeripheralScreen {
         lazy private (set) var environment = Environment(
             name: scanResult.name,
             connectionState: .disconnected,
-            displayData: [],
+            displayData: mapAdvertisementData(self.scanResult.advertisementData),
             connectable: true, 
             connect: { [weak self] in self?.connect() },
             disconnect: { [weak self] in self?.disconnect() }
@@ -45,11 +45,10 @@ extension PeripheralScreen {
 
 extension PeripheralScreen.ViewModel {
     func connect() {
-        environment.connectionState = .connecting
-        
         guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [scanResult.id]).first else {
             return
         }
+        environment.connectionState = .connecting
         
         centralManager.connect(peripheral)
             .autoconnect()
@@ -68,7 +67,18 @@ extension PeripheralScreen.ViewModel {
     }
     
     func disconnect() {
-        environment.connectionState = .disconnected
+        guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [scanResult.id]).first else {
+            return
+        }
+        environment.connectionState = .disconnecting
+        
+        Task {
+            _ = try await centralManager.cancelPeripheralConnection(peripheral)
+                .autoconnect()
+                .value
+        }
+        
+
     }
 }
 
