@@ -28,9 +28,6 @@ struct ScannerView: View {
                         .padding()
                 }
                 .navigationTitle("Scanner")
-                .onAppear {
-                    scannerEnv.startScan()
-                }
             } detail: {
                 Text("Hello World!")
             }
