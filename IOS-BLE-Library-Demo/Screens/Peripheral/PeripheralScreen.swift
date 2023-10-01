@@ -32,7 +32,10 @@ struct PeripheralView: View {
             ConnectionButton()
         }
         .onAppear {
-            
+            peripheralEnv.startTrackingChanges()
+        }
+        .onDisappear {
+            peripheralEnv.stopTrackingChanges()
         }
         .navigationTitle(peripheralEnv.name ?? "Unnamed")
     }
