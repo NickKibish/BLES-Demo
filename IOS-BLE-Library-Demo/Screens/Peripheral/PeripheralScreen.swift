@@ -31,6 +31,9 @@ struct PeripheralView: View {
             Spacer()
             ConnectionButton()
         }
+        .onAppear {
+            
+        }
         .navigationTitle(peripheralEnv.name ?? "Unnamed")
     }
 }

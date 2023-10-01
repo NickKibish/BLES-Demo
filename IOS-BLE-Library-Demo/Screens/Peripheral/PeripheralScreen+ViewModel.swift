@@ -19,7 +19,9 @@ extension PeripheralScreen {
             rssi: DisplayableRSSI(rssi: scanResult.rssi),
             connectable: true,
             connect: { [weak self] in self?.connect() },
-            disconnect: { [weak self] in self?.disconnect() }
+            disconnect: { [weak self] in self?.disconnect() },
+            startTrackingChanges: { [weak self] in self?.startTrackingChanges() },
+            stopTrackingChanges: { [weak self] in self?.stopTrackingChanges() }
         )
         
         let scanResult: ScanResult
@@ -42,6 +44,11 @@ extension PeripheralScreen.ViewModel {
 }
 
 extension PeripheralScreen.ViewModel {
+    func startTrackingChanges() { }
+    func stopTrackingChanges() { }
+}
+
+extension PeripheralScreen.ViewModel {
     class Environment: ObservableObject {
         @Published var name: String?
         @Published var connectionState: ConnectionState
@@ -51,8 +58,10 @@ extension PeripheralScreen.ViewModel {
         
         let connect: () -> ()
         let disconnect: () -> ()
+        let startTrackingChanges: () -> ()
+        let stopTrackingChanges: () -> ()
         
-        init(name: String?, connectionState: ConnectionState, displayData: [DisplayableValue], rssi: DisplayableRSSI, connectable: Bool, connect: @escaping () -> Void, disconnect: @escaping () -> Void) {
+        init(name: String? = nil, connectionState: ConnectionState, displayData: [DisplayableValue], rssi: DisplayableRSSI, connectable: Bool, connect: @escaping () -> Void, disconnect: @escaping () -> Void, startTrackingChanges: @escaping () -> Void, stopTrackingChanges: @escaping () -> Void) {
             self.name = name
             self.connectionState = connectionState
             self.displayData = displayData
@@ -60,6 +69,8 @@ extension PeripheralScreen.ViewModel {
             self.connectable = connectable
             self.connect = connect
             self.disconnect = disconnect
+            self.startTrackingChanges = startTrackingChanges
+            self.stopTrackingChanges = stopTrackingChanges
         }
     }
     
