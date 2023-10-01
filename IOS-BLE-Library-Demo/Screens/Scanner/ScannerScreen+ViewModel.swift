@@ -23,6 +23,7 @@ extension ScannerScreen {
         )
         
         private var cancelable = Set<AnyCancellable>()
+        private var peripheralViewModels: [UUID: PeripheralScreen.ViewModel] = [:]
         
         init() {
             
@@ -41,7 +42,13 @@ extension ScannerScreen.ViewModel {
 
 extension ScannerScreen.ViewModel {
     func peripheralViewModel(for scanResult: ScanResult) -> PeripheralScreen.ViewModel {
-        PeripheralScreen.ViewModel(scanResult: scanResult)
+        guard let vm = peripheralViewModels[scanResult.id] else {
+            let newViewModel = PeripheralScreen.ViewModel(scanResult: scanResult)
+            peripheralViewModels[scanResult.id] = newViewModel
+            return newViewModel
+        }
+        
+        return vm 
     }
 }
 
