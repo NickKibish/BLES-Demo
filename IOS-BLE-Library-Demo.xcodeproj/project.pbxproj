@@ -38,6 +38,7 @@
 		0177EAB02AC86EBA005D1BCD /* BluetoothState+CBManagerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0177EAAF2AC86EBA005D1BCD /* BluetoothState+CBManagerState.swift */; };
 		01BE5D3B2AC999DA009FAD46 /* AdvertisementData+Displayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BE5D3A2AC999DA009FAD46 /* AdvertisementData+Displayable.swift */; };
 		01EFE5412AC9EF4B00A58CE4 /* SignalCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EFE5402AC9EF4B00A58CE4 /* SignalCard.swift */; };
+		01EFE5462ACA1A2700A58CE4 /* iOS-BLE-Library in Frameworks */ = {isa = PBXBuildFile; productRef = 01EFE5452ACA1A2700A58CE4 /* iOS-BLE-Library */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01EFE5462ACA1A2700A58CE4 /* iOS-BLE-Library in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +337,9 @@
 			dependencies = (
 			);
 			name = "IOS-BLE-Library-Demo";
+			packageProductDependencies = (
+				01EFE5452ACA1A2700A58CE4 /* iOS-BLE-Library */,
+			);
 			productName = "IOS-BLE-Library-Demo";
 			productReference = 0101D5CA2AC59B5800BE03E2 /* IOS-BLE-Library-Demo.app */;
 			productType = "com.apple.product-type.application";
@@ -407,6 +412,9 @@
 				Base,
 			);
 			mainGroup = 0101D5C12AC59B5800BE03E2;
+			packageReferences = (
+				01EFE5442ACA1A2700A58CE4 /* XCRemoteSwiftPackageReference "IOS-BLE-Library" */,
+			);
 			productRefGroup = 0101D5CB2AC59B5800BE03E2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -806,6 +814,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		01EFE5442ACA1A2700A58CE4 /* XCRemoteSwiftPackageReference "IOS-BLE-Library" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NordicSemiconductor/IOS-BLE-Library.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		01EFE5452ACA1A2700A58CE4 /* iOS-BLE-Library */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01EFE5442ACA1A2700A58CE4 /* XCRemoteSwiftPackageReference "IOS-BLE-Library" */;
+			productName = "iOS-BLE-Library";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0101D5C22AC59B5800BE03E2 /* Project object */;
 }

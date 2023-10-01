@@ -7,6 +7,8 @@
 
 import Foundation
 import Combine
+// 3.1 - Import Library
+import iOS_BLE_Library
 
 typealias PeripheralScreenEnvironment = PeripheralScreen.ViewModel.Environment
 
@@ -26,26 +28,80 @@ extension PeripheralScreen {
         
         let scanResult: ScanResult
         private var cancelable = Set<AnyCancellable>()
+        // 3.2 - Create CentralManager Instance
+        let centralManager: CentralManager
         
-        init(scanResult: ScanResult) {
+        // 5.1 - Scan Result Cancelable
+        private var scanResultCancelable: Cancellable?
+        
+        // 3.3 - Add centralManager as a parameter to init
+        init(scanResult: ScanResult, centralManager: CentralManager) {
             self.scanResult = scanResult
+            
+            // 3.4 - Assign `CentralManager`
+            self.centralManager = centralManager
         }
     }
 }
 
 extension PeripheralScreen.ViewModel {
     func connect() {
-        environment.connectionState = .connected
+        // 4.3 - Retreive peripheral
+        guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [scanResult.id]).first else {
+            return
+        }
+        
+        // 4.1 - Change state to `connecting`
+        environment.connectionState = .connecting
+        
+        // 4.4 - Connect peripheral
+        centralManager.connect(peripheral)
+            .autoconnect()
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    self.environment.connectionState = .disconnected
+                case .failure(let e):
+                    self.environment.connectionState = .error(e)
+                }
+            } receiveValue: { _ in
+                self.environment.connectionState = .connected
+            }
+            .store(in: &cancelable)
     }
     
     func disconnect() {
-        environment.connectionState = .disconnected
+        // 4.5 Retreive the peripheral
+        guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [scanResult.id]).first else {
+            return
+        }
+        
+        // 4.2 - Change state to `disconnecting`
+        environment.connectionState = .disconnecting
+        
+        // 4.6 Disconnect the peripheral
+        Task {
+            _ = try await centralManager.cancelPeripheralConnection(peripheral)
+                .autoconnect()
+                .value
+        }
     }
 }
 
 extension PeripheralScreen.ViewModel {
-    func startTrackingChanges() { }
-    func stopTrackingChanges() { }
+    func startTrackingChanges() {
+        // 5.2 - Start Track Changes
+        scanResultCancelable = centralManager.scanResultsChannel
+            .filter { $0.peripheral.identifier == self.scanResult.id }
+            .sink(receiveValue: { sr in
+                self.environment.rssi = DisplayableRSSI(rssi: sr.rssi.value)
+            })
+    }
+    
+    func stopTrackingChanges() { 
+        // 5.3 - Stop Track Changes
+        scanResultCancelable?.cancel()
+    }
 }
 
 extension PeripheralScreen.ViewModel {
