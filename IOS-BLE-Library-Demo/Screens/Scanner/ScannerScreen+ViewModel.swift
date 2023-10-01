@@ -66,7 +66,7 @@ extension ScannerScreen.ViewModel {
 
 extension ScannerScreen.ViewModel {
     func peripheralViewModel(for scanResult: ScanResult) -> PeripheralScreen.ViewModel {
-        PeripheralScreen.ViewModel(scanResult: scanResult)
+        PeripheralScreen.ViewModel(scanResult: scanResult, centralManager: centralManager)
     }
 }
 

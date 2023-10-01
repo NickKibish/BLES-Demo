@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import iOS_BLE_Library
 
 typealias PeripheralScreenEnvironment = PeripheralScreen.ViewModel.Environment
 
@@ -24,8 +25,11 @@ extension PeripheralScreen {
         let scanResult: ScanResult
         private var cancelable = Set<AnyCancellable>()
         
-        init(scanResult: ScanResult) {
+        let centralManager: CentralManager
+        
+        init(scanResult: ScanResult, centralManager: CentralManager) {
             self.scanResult = scanResult
+            self.centralManager = centralManager
             
             self.environment = Environment(
                 name: "My Device",
@@ -35,7 +39,7 @@ extension PeripheralScreen {
                 ],
                 connectable: true,
                 connect: { [weak self] in self?.connect() },
-                disconnect: { [weak self] in self?.disconnect() }
+                disconnect: { [weak self] in self?.disconnect() } 
             )
         }
     }
@@ -43,7 +47,26 @@ extension PeripheralScreen {
 
 extension PeripheralScreen.ViewModel {
     func connect() {
-        environment.connectionState = .connected
+        environment.connectionState = .connecting
+        
+        guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [scanResult.id]).first else {
+            return
+        }
+        
+        centralManager.connect(peripheral)
+            .autoconnect()
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    self.environment.connectionState = .disconnected
+                case .failure(let e):
+                    self.environment.connectionState = .error(e)
+                }
+            } receiveValue: { _ in
+                self.environment.connectionState = .connected
+            }
+            .store(in: &cancelable)
+
     }
     
     func disconnect() {
