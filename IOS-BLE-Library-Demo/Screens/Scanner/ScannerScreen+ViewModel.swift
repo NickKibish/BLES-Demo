@@ -12,6 +12,12 @@ import CoreBluetooth
 
 typealias ScannerScreenEnvironment = ScannerScreen.ViewModel.Environment
 
+class CustomReactiveDelegate: ReactiveCentralManagerDelegate {
+    func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
+        
+    }
+}
+
 extension ScannerScreen {
     class ViewModel: ObservableObject {
         lazy private (set) var environment = Environment(
@@ -27,7 +33,7 @@ extension ScannerScreen {
         private var cancelable = Set<AnyCancellable>()
         private var peripheralViewModels: [UUID: PeripheralScreen.ViewModel] = [:]
         
-        let centralManager = CentralManager()
+        let centralManager = CentralManager(centralManagerDelegate: CustomReactiveDelegate(), options: [CBCentralManagerOptionRestoreIdentifierKey:"dema-app-centralmanager"])
         
         init() {
             centralManager.stateChannel
