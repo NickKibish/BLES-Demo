@@ -26,10 +26,16 @@ struct PeripheralView: View {
     var body: some View {
         VStack {
             Form {
-                ContentCardGrid(data: peripheralEnv.displayData)
+                ContentCardGrid(data: [DisplayableValue(id: "rssi", description: "rssi", value: peripheralEnv.rssi)] +  peripheralEnv.displayData)
             }
             Spacer()
             ConnectionButton()
+        }
+        .onAppear {
+            peripheralEnv.startTrackingChanges()
+        }
+        .onDisappear {
+            peripheralEnv.stopTrackingChanges()
         }
         .navigationTitle(peripheralEnv.name ?? "Unnamed")
     }
@@ -37,5 +43,10 @@ struct PeripheralView: View {
 
 #Preview {
     PeripheralView()
-        .environmentObject(PeripheralScreenEnvironment())
+        .environmentObject(
+            PeripheralScreenEnvironment(
+                displayData: [DisplayableValue(id: "man.data", description: "man.data", value: Data([0x00,0x01]))],
+                rssi: DisplayableRSSI(rssi: -60)
+            )
+        )
 }

@@ -17,7 +17,7 @@ struct NotStartedView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 200, height: 200)
                 .foregroundStyle(.secondary)
-            Text("Stanner not started")
+            Text("Scanner not started")
                 .font(.title)
                 .foregroundStyle(.secondary)
                 .fontWeight(.bold)

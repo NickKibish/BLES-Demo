@@ -9,6 +9,6 @@ import Foundation
 
 extension ScanResult {
     static var empty: ScanResult {
-        ScanResult(name: nil, signal: .noSignal, id: UUID(), advertisementData: [:])
+        ScanResult(name: nil, rssi: 0, id: UUID(), advertisementData: [:])
     }
 }

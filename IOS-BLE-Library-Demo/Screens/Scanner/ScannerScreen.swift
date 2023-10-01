@@ -28,9 +28,6 @@ struct ScannerView: View {
                         .padding()
                 }
                 .navigationTitle("Scanner")
-                .onAppear {
-                    scannerEnv.startScan()
-                }
             } detail: {
                 Text("Hello World!")
             }
@@ -48,8 +45,8 @@ struct ScannerView: View {
             isScanning: true,
             bluetoothState: .poweredOn,
             scanResults: [
-                ScanResult(name: "Device", signal: .good, id: UUID(), advertisementData: [:]),
-                ScanResult(name: nil, signal: .noSignal, id: UUID(), advertisementData: [:]),
+                ScanResult(name: "Device", rssi: 0, id: UUID(), advertisementData: [:]),
+                ScanResult(name: nil, rssi: 0, id: UUID(), advertisementData: [:]),
             ]
         ))
 }

@@ -7,8 +7,16 @@
 
 import Foundation
 import Combine
+import iOS_BLE_Library
+import CoreBluetooth
 
 typealias ScannerScreenEnvironment = ScannerScreen.ViewModel.Environment
+
+class CustomReactiveDelegate: ReactiveCentralManagerDelegate {
+    func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
+        
+    }
+}
 
 extension ScannerScreen {
     class ViewModel: ObservableObject {
@@ -23,9 +31,17 @@ extension ScannerScreen {
         )
         
         private var cancelable = Set<AnyCancellable>()
+        private var peripheralViewModels: [UUID: PeripheralScreen.ViewModel] = [:]
+        
+        let centralManager = CentralManager(centralManagerDelegate: CustomReactiveDelegate(), options: [CBCentralManagerOptionRestoreIdentifierKey:"dema-app-centralmanager"])
         
         init() {
+            centralManager.stateChannel
+                .map { BluetoothState(managerState: $0) }
+                .assign(to: &environment.$bluetoothState)
             
+            centralManager.isScanningChannel
+                .assign(to: &environment.$isScanning)
         }
     }
 }
@@ -33,15 +49,37 @@ extension ScannerScreen {
 extension ScannerScreen.ViewModel {
     func startScan() {
         environment.started = true
+        
+        centralManager.scanForPeripherals(withServices: nil)
+            .autoconnect()
+            .map {
+                ScanResult(name: $0.name, rssi: $0.rssi.value, id: $0.peripheral.identifier, advertisementData: $0.advertisementData.rawData)
+            }
+            .filter {
+                $0.name != nil
+            }
+            .sink { _ in
+                
+            } receiveValue: {
+                self.environment.scanResults.replacedOrAppended($0)
+            }
+            .store(in: &cancelable)
     }
     
     func stopScan() {
+        centralManager.stopScan()
     }
 }
 
 extension ScannerScreen.ViewModel {
     func peripheralViewModel(for scanResult: ScanResult) -> PeripheralScreen.ViewModel {
-        PeripheralScreen.ViewModel(scanResult: scanResult)
+       guard let vm = peripheralViewModels[scanResult.id] else {
+            let newViewModel = PeripheralScreen.ViewModel(scanResult: scanResult, centralManager: centralManager)
+            peripheralViewModels[scanResult.id] = newViewModel
+            return newViewModel
+        }
+        
+        return vm 
     }
 }
 

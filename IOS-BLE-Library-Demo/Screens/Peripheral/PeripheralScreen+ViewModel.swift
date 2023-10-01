@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Combine
+import iOS_BLE_Library
 
 typealias PeripheralScreenEnvironment = PeripheralScreen.ViewModel.Environment
 
@@ -14,38 +16,79 @@ extension PeripheralScreen {
         lazy private (set) var environment = Environment(
             name: scanResult.name,
             connectionState: .disconnected,
-            displayData: [],
-            connectable: true, 
+            displayData: mapAdvertisementData(scanResult.advertisementData),
+            rssi: DisplayableRSSI(rssi: scanResult.rssi),
+            connectable: true,
             connect: { [weak self] in self?.connect() },
-            disconnect: { [weak self] in self?.disconnect() }
+            disconnect: { [weak self] in self?.disconnect() },
+            startTrackingChanges: { [weak self] in self?.startTrackingChanges() },
+            stopTrackingChanges: { [weak self] in self?.stopTrackingChanges() }
         )
         
         let scanResult: ScanResult
+        private var cancelable = Set<AnyCancellable>()
+        private var scanResultCancelable: Cancellable?
         
-        init(scanResult: ScanResult) {
+        let centralManager: CentralManager
+        
+        init(scanResult: ScanResult, centralManager: CentralManager) {
             self.scanResult = scanResult
+            self.centralManager = centralManager
             
-            self.environment = Environment(
-                name: "My Device",
-                connectionState: .disconnected,
-                displayData: [
-                    DisplayableTextValue(id: "1", description: "Man. data", value: Data([0x00, 0x01]))
-                ],
-                connectable: true,
-                connect: { [weak self] in self?.connect() },
-                disconnect: { [weak self] in self?.disconnect() }
-            )
         }
     }
 }
 
 extension PeripheralScreen.ViewModel {
     func connect() {
-        environment.connectionState = .connected
+        guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [scanResult.id]).first else {
+            return
+        }
+        environment.connectionState = .connecting
+        
+        centralManager.connect(peripheral)
+            .autoconnect()
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    self.environment.connectionState = .disconnected
+                case .failure(let e):
+                    self.environment.connectionState = .error(e)
+                }
+            } receiveValue: { _ in
+                self.environment.connectionState = .connected
+            }
+            .store(in: &cancelable)
+
     }
     
     func disconnect() {
-        environment.connectionState = .disconnected
+        guard let peripheral = centralManager.retrievePeripherals(withIdentifiers: [scanResult.id]).first else {
+            return
+        }
+        environment.connectionState = .disconnecting
+        
+        Task {
+            _ = try await centralManager.cancelPeripheralConnection(peripheral)
+                .autoconnect()
+                .value
+        }
+        
+
+    }
+}
+
+extension PeripheralScreen.ViewModel {
+    func startTrackingChanges() {
+        scanResultCancelable = centralManager.scanResultsChannel
+            .filter { $0.peripheral.identifier == self.scanResult.id }
+            .sink(receiveValue: { sr in
+                self.environment.rssi = DisplayableRSSI(rssi: sr.rssi.value)
+            })
+    }
+    
+    func stopTrackingChanges() { 
+        scanResultCancelable?.cancel()
     }
 }
 
@@ -53,19 +96,25 @@ extension PeripheralScreen.ViewModel {
     class Environment: ObservableObject {
         @Published var name: String?
         @Published var connectionState: ConnectionState
-        @Published var displayData: [DisplayableTextValue]
+        @Published var displayData: [DisplayableValue]
+        @Published var rssi: DisplayableRSSI
         @Published var connectable: Bool
         
         let connect: () -> ()
         let disconnect: () -> ()
+        let startTrackingChanges: () -> ()
+        let stopTrackingChanges: () -> ()
         
-        init(name: String?, connectionState: ConnectionState, displayData: [DisplayableTextValue], connectable: Bool, connect: @escaping () -> Void, disconnect: @escaping () -> Void) {
+        init(name: String? = nil, connectionState: ConnectionState, displayData: [DisplayableValue], rssi: DisplayableRSSI, connectable: Bool, connect: @escaping () -> Void, disconnect: @escaping () -> Void, startTrackingChanges: @escaping () -> Void, stopTrackingChanges: @escaping () -> Void) {
             self.name = name
             self.connectionState = connectionState
             self.displayData = displayData
+            self.rssi = rssi
             self.connectable = connectable
             self.connect = connect
             self.disconnect = disconnect
+            self.startTrackingChanges = startTrackingChanges
+            self.stopTrackingChanges = stopTrackingChanges
         }
     }
     
