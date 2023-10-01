@@ -7,6 +7,9 @@
 
 import Foundation
 import Combine
+// 1.1 Import Libraries
+import iOS_BLE_Library
+import CoreBluetooth
 
 typealias ScannerScreenEnvironment = ScannerScreen.ViewModel.Environment
 
@@ -25,6 +28,9 @@ extension ScannerScreen {
         private var cancelable = Set<AnyCancellable>()
         private var peripheralViewModels: [UUID: PeripheralScreen.ViewModel] = [:]
         
+        // 1.2 Create `CentralManager` instance
+        let centralManager = CentralManager()
+        
         init() {
             
         }
@@ -34,9 +40,27 @@ extension ScannerScreen {
 extension ScannerScreen.ViewModel {
     func startScan() {
         environment.started = true
+        
+        // 1.3 Start Scanning
+        centralManager.scanForPeripherals(withServices: nil)
+            .autoconnect()
+            .map {
+                ScanResult(name: $0.name, rssi: $0.rssi.value, id: $0.peripheral.identifier, advertisementData: $0.advertisementData.rawData)
+            }
+            .filter {
+                $0.name != nil
+            }
+            .sink { _ in
+                
+            } receiveValue: {
+                self.environment.scanResults.replacedOrAppended($0)
+            }
+            .store(in: &cancelable)
     }
     
     func stopScan() {
+        // 1.4 Implement Stop Scanning
+        centralManager.stopScan()
     }
 }
 
