@@ -13,6 +13,21 @@ import CoreBluetooth
 
 typealias ScannerScreenEnvironment = ScannerScreen.ViewModel.Environment
 
+// 6.1 - Custom ReactiveDelegate
+class CustomReactiveDelegate: ReactiveCentralManagerDelegate {
+    // 6.2 - Implement missing method
+    func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
+        
+    }
+    
+    // 6.4 - Override method
+    override func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        super.centralManager(central, didConnect: peripheral)
+        
+        print("Connected to the peripheral: \(peripheral.identifier)")
+    }
+}
+
 extension ScannerScreen {
     class ViewModel: ObservableObject {
         lazy private (set) var environment = Environment(
@@ -29,7 +44,8 @@ extension ScannerScreen {
         private var peripheralViewModels: [UUID: PeripheralScreen.ViewModel] = [:]
         
         // 1.2 Create `CentralManager` instance
-        let centralManager = CentralManager()
+        // 6.3 Pass Delegate and Options
+        let centralManager = CentralManager(centralManagerDelegate: CustomReactiveDelegate(), options: [CBCentralManagerOptionRestoreIdentifierKey:"dema-app-centralmanager"])
         
         init() {
             // 2.1 State changes
