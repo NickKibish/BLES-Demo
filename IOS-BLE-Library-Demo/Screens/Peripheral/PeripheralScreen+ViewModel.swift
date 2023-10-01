@@ -7,6 +7,8 @@
 
 import Foundation
 import Combine
+// 3.1 - Import Library
+import iOS_BLE_Library
 
 typealias PeripheralScreenEnvironment = PeripheralScreen.ViewModel.Environment
 
@@ -26,9 +28,15 @@ extension PeripheralScreen {
         
         let scanResult: ScanResult
         private var cancelable = Set<AnyCancellable>()
+        // 3.2 - Create CentralManager Instance
+        let centralManager: CentralManager
         
-        init(scanResult: ScanResult) {
+        // 3.3 - Add centralManager as a parameter to init
+        init(scanResult: ScanResult, centralManager: CentralManager) {
             self.scanResult = scanResult
+            
+            // 3.4 - Assign `CentralManager`
+            self.centralManager = centralManager
         }
     }
 }
