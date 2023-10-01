@@ -31,6 +31,9 @@ extension PeripheralScreen {
         // 3.2 - Create CentralManager Instance
         let centralManager: CentralManager
         
+        // 5.1 - Scan Result Cancelable
+        private var scanResultCancelable: Cancellable?
+        
         // 3.3 - Add centralManager as a parameter to init
         init(scanResult: ScanResult, centralManager: CentralManager) {
             self.scanResult = scanResult
@@ -86,8 +89,19 @@ extension PeripheralScreen.ViewModel {
 }
 
 extension PeripheralScreen.ViewModel {
-    func startTrackingChanges() { }
-    func stopTrackingChanges() { }
+    func startTrackingChanges() {
+        // 5.2 - Start Track Changes
+        scanResultCancelable = centralManager.scanResultsChannel
+            .filter { $0.peripheral.identifier == self.scanResult.id }
+            .sink(receiveValue: { sr in
+                self.environment.rssi = DisplayableRSSI(rssi: sr.rssi.value)
+            })
+    }
+    
+    func stopTrackingChanges() { 
+        // 5.3 - Stop Track Changes
+        scanResultCancelable?.cancel()
+    }
 }
 
 extension PeripheralScreen.ViewModel {
