@@ -30,9 +30,7 @@ extension PeripheralScreen {
             self.environment = Environment(
                 name: "My Device",
                 connectionState: .disconnected,
-                displayData: [
-                    DisplayableTextValue(id: "1", description: "Man. data", value: Data([0x00, 0x01]))
-                ],
+                displayData: mapAdvertisementData(scanResult.advertisementData),
                 connectable: true,
                 connect: { [weak self] in self?.connect() },
                 disconnect: { [weak self] in self?.disconnect() }
